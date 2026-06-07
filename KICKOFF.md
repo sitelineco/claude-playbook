@@ -58,6 +58,18 @@ PHASE 1 — UNDERSTAND THE CODEBASE
 - If rules were missing or wrong (Phase 0), write accurate .claude/rules/ from what you found
   (design/brand system, naming conventions, commit style — grounded in THIS codebase).
 
+PHASE 1.5 — MAP THE DEPLOYMENT (before building agents)
+- Determine, with EVIDENCE (not assumptions or handoff docs): the host (curl -I the live domain);
+  the EXACT owner/repo/branch production builds from (watch for same-named repos under different
+  owners — verify in the host dashboard, or prove it via a bundle string that's in this repo's git
+  history); and every SEPARATE deploy target (frontend host, edge functions, DB migrations) plus the
+  secret/quirk each needs (edge functions often need their own CI job + access token).
+- If the repo I'm in is NOT what production builds from, STOP and tell me — we fix the deploy source
+  before writing code.
+- Record this in CLAUDE.md under "Deployment". Treat "live & verified" — not "committed" — as done:
+  after fixes, probe the running system (e.g. an unauthenticated call to a protected endpoint should
+  401), don't trust the diff.
+
 PHASE 2 — PROPOSE THE AGENT ROSTER (wait for my approval)
 - Recommend single-responsibility specialists tailored to THIS stack and the work we repeat. Strong
   default set, plus stack-specific ones:
